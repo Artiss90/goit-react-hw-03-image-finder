@@ -1,16 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+/* eslint react/prop-types: 1 */
+
 export default class ImageGalleryItem extends Component {
   static propTypes = {
-    prop: PropTypes,
+    image: PropTypes.string,
+    name: PropTypes.string,
   };
 
   render() {
-    return (
-      <li className="ImageGalleryItem">
-        <img src="" alt="" className="ImageGalleryItem-image" />
-      </li>
-    );
+    const { image, name } = this.props;
+    return <img src={image} alt={name} className="ImageGalleryItem-image" />;
   }
 }
