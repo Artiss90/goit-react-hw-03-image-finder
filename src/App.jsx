@@ -10,7 +10,7 @@ import style from './App.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 const KEY_API = '19207943-ecb2269b7818ebd0e732e1fe9';
-let page = 0;
+let page = 1;
 
 class App extends Component {
   state = {
@@ -18,6 +18,7 @@ class App extends Component {
     onOpenModal: false,
     loading: false,
     querySearch: '',
+    error: null,
   };
 
   componentDidMount() {}
@@ -39,8 +40,8 @@ class App extends Component {
           `https://pixabay.com/api/?q=${querySearch}&page=${page}&key=${KEY_API}&image_type=photo&orientation=horizontal&per_page=12`,
         )
         .then(response => this.setState({ articles: response.data.hits }))
+        .catch(error => this.setState({ error }))
         .finally(this.toggleLoading);
-      return page;
     }
 
     // if (nextQuery === prevQuery && nextList !== prevList) {

@@ -8,9 +8,6 @@ export default class ImageGallery extends Component {
   static propTypes = {
     list: PropTypes.array,
   };
-  // state = {
-  //   list: []
-  // }
 
   // componentDidUpdate(prevProps, prevState) {
   //   const { list } = this.props
