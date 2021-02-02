@@ -7,28 +7,25 @@ import ImageGalleryItem from './ImageGalleryItem/ImageGalleryItem';
 export default class ImageGallery extends Component {
   static propTypes = {
     list: PropTypes.array,
+    onClick: PropTypes.func,
   };
 
-  // componentDidUpdate(prevProps, prevState) {
-  //   const { list } = this.props
-  //   const nextList = this.props.list;
-  //   const prevList = prevProps.list;
-
-  //   if (nextList !== prevList) {
-  //     console.log(list);
-  //     console.log(prevList);
-  //     console.log(prevState);
-  //   }
-  // }
+  handleShowLargeImage = (imageUrl, name) => {
+    this.props.onClick({ src: imageUrl, name: name });
+  };
 
   render() {
     const { list } = this.props;
     return (
       <ul className="ImageGallery">
-        {/* <!-- Набор <li> с изображениями --> */}
         {list &&
-          list.map(({ id, webformatURL, largeImageURL, tags }) => (
-            <li key={id} className="ImageGalleryItem">
+          list.map(({ id, webformatURL, largeImageURL, tags }, index) => (
+            // ! в атрибут key поставил индекс вместо id, поскольку id на бекенде дублируются, массив статический - проблем не будет
+            <li
+              key={index}
+              className="ImageGalleryItem"
+              onClick={() => this.handleShowLargeImage(largeImageURL, tags)}
+            >
               <ImageGalleryItem image={webformatURL} name={tags} />
             </li>
           ))}

@@ -5,13 +5,15 @@ import ImageGallery from './Components/ImageGallery';
 import Modal from 'Components/Modal';
 import LoaderImage from 'Components/Loader';
 import fetchImages from './services';
-// import axios from 'axios';
 import { ToastContainer } from 'react-toastify';
 import style from './App.module.css';
 import 'react-toastify/dist/ReactToastify.css';
 
+/* eslint react/prop-types: 1 */
+
 class App extends Component {
   state = {
+    largeImage: null,
     page: 1,
     articles: [],
     onOpenModal: false,
@@ -23,7 +25,6 @@ class App extends Component {
   componentDidMount() {}
 
   componentDidUpdate(prevProps, prevState) {
-    // const { querySearch } = this.state;
     const nextQuery = this.state.querySearch;
     const prevQuery = prevState.querySearch;
 
@@ -51,6 +52,11 @@ class App extends Component {
       );
   };
 
+  getLargeImage = image => {
+    this.setState({ largeImage: image });
+    this.toggleModal();
+  };
+
   onSearch = query =>
     this.setState({ querySearch: query, articles: [], page: 1 });
 
@@ -67,26 +73,27 @@ class App extends Component {
   };
 
   getLoadMore = () => {
-    // this.setState(prevState => ({ page: prevState.page + 1 }))
-
     this.getFetchImages();
-
-    // elem.scrollIntoView(top)
   };
 
   render() {
-    const { onOpenModal, articles, loading } = this.state;
+    const { onOpenModal, articles, loading, largeImage } = this.state;
     return (
       <div className={style.app}>
         <Searchbar onSubmitForm={this.onSearch}></Searchbar>
-        <ImageGallery list={articles}></ImageGallery>
+        <ImageGallery
+          list={articles}
+          onClick={this.getLargeImage}
+        ></ImageGallery>
         {loading && <LoaderImage onLoad={loading} />}
         {articles.length > 0 && (
           <Button onClick={this.getLoadMore} aria-label="Load more">
             Load more
           </Button>
         )}
-        {onOpenModal && <Modal />}
+        {onOpenModal && (
+          <Modal image={largeImage} toggleModal={this.toggleModal} />
+        )}
         <ToastContainer />
       </div>
     );

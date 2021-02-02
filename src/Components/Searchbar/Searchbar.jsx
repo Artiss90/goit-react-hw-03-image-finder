@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 
+/* eslint react/prop-types: 1 */
+
 export default class Searchbar extends Component {
   static propTypes = {
     onSubmitForm: PropTypes.func,
@@ -12,7 +14,7 @@ export default class Searchbar extends Component {
   };
 
   notify = () =>
-    toast.info('поле не должно бить пустым', {
+    toast.info('поле не должно быть пустым', {
       position: 'top-center',
       autoClose: 5000,
       hideProgressBar: false,
